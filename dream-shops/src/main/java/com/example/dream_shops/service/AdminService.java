@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.dream_shops.repos.AdminRepo;
 import com.example.dream_shops.entity.Admin;
+import com.example.dream_shops.entity.User;
 
 @Service
 public class AdminService {
@@ -20,6 +21,10 @@ public class AdminService {
 
     public Admin getAdminById(Long id){
         return adminRepo.findById(id).orElseThrow(() ->new RuntimeException("Admin with id " + id + " not found"));
+    }
+
+    public void createUser(Admin admin){
+        adminRepo.save(admin);
     }
 
     public void updateAdmin(Admin admin){
