@@ -1,5 +1,7 @@
 package com.example.dream_shops.controllers;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.dream_shops.entity.Admin;
+import com.example.dream_shops.entity.Order;
 import com.example.dream_shops.entity.Product;
 import com.example.dream_shops.entity.User;
 import com.example.dream_shops.service.AdminService;
@@ -32,6 +36,8 @@ public class AdminController {
 
     @Autowired
     private ProductService productService;
+
+    private User user;
 
     @GetMapping("/verifycredentials")
     public String verifyCredentials(@ModelAttribute("admin") Admin admin, Model model) {
@@ -84,6 +90,32 @@ public class AdminController {
         adminService.deleteAdmin(id);
 
         return "/admin/home";
+    }
+
+    @GetMapping("/user/login")
+    public String userLogin(User user, Model model){
+        if (userService.verifyCredentials(user.getEmail(), user.getPassword())) {
+            user = userService.findUserByEmail(user.getEmail());
+            model.addAttribute("ordersList", orderService.findOrdersByUser(user))
+            
+            return "ProductPage";
+        }
+
+        model.addAttribute("error", "Invalid email or password");
+        return "Login";
+    }
+
+    @GetMapping("/place/order")
+    public String placeOrder(Order order, Model model){
+        double totalAmount = order.getPrice() * order.getQuantity();
+        order.setAmount(totalAmount);
+        order.setUser(user);
+        order.setDate(new Date());
+
+        orderService.createOrder(order);
+
+        model.addAttribute("amount", totalAmount);
+        return "OrderStatus";
     }
 
 }
