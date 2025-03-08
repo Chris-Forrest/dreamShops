@@ -39,8 +39,6 @@ public class AdminController {
 
     private User user;
 
-    private Order order;
-
 
     @GetMapping("/verifycredentials")
     public String verifyCredentials(@ModelAttribute("admin") Admin admin, Model model) {
@@ -99,7 +97,7 @@ public class AdminController {
     public String userLogin(User user, Model model){
         if (userService.verifyCredentials(user.getEmail(), user.getPassword())) {
             user = userService.findUserByEmail(user.getEmail());
-            model.addAttribute("ordersList", orderService.findOrdersByUser(user))
+            model.addAttribute("ordersList", orderService.findOrdersByUser(user));
             
             return "ProductPage";
         }
