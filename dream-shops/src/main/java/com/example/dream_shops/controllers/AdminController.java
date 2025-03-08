@@ -106,6 +106,22 @@ public class AdminController {
         return "Login";
     }
 
+    @GetMapping("/product/search")
+    public String productSearch(String name, Model model){
+        Product product = productService.findProductByName(name);
+        if(product != null){
+            model.addAttribute("orderList", orderService.findOrdersByUser(user));
+            model.addAttribute("product", product);
+
+        }
+
+        model.addAttribute("error", "Sorry, product is not found");
+        model.addAttribute("orderList", orderService.findOrdersByUser(user));
+        return "ProductPage";
+
+    }
+
+
     @GetMapping("/place/order")
     public String placeOrder(Order order, Model model){
         double totalAmount = order.getPrice() * order.getQuantity();
