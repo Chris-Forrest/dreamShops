@@ -127,7 +127,7 @@ public class AdminController {
         double totalAmount = order.getPrice() * order.getQuantity();
         order.setAmount(totalAmount);
         order.setUser(user);
-        order.setDate(new Date());
+        order.setDate((java.sql.Date) new Date());
 
         orderService.createOrder(order);
 
