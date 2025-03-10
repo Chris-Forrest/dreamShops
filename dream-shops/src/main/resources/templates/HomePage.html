@@ -19,9 +19,6 @@
                 <a class="nav-link active" aria-current="page" th:href="@{/home}">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" th:href="@{/login}">Login</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" th:href="@{/products}">Products</a>
               </li>
               <li class="nav-item">
@@ -31,6 +28,9 @@
                 <a class="nav-link" th:href="@{/contact}">Contact Us</a>
               </li>
             </ul>
+            <form class="d-flex" role="login">
+                <a th:href="a{/login}" class=""btn btn-success>Login</a>
+            </form>
           </div>
         </div>
       </nav>
