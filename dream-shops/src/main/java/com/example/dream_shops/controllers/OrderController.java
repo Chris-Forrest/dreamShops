@@ -15,11 +15,6 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/place/order")
-    public String placeOrder(Order order, Model model){
-        double totalAmount = order.getPrice() * order.getQuantity();
-        
-        return "/admin/page";
-    }
+    
 
 }
