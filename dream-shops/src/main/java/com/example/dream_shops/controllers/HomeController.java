@@ -15,7 +15,7 @@ public class HomeController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/home")
+    @GetMapping("/homePage")
     public String homePage(){
         return "HomePage";
     }
